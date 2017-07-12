@@ -1,0 +1,772 @@
+= **Keyspace: ig_app_data** =
+Description: used for all user-info-related tables which are directly relevant to the app's functionality (e.g.: posts, followers, etc ...)
+===== Replications =====
+| **Name** | **Replication** | **Description**
+| dev | 'class': 'SimpleStrategy', 'replication_factor' : 1 | used for dev environment
+
+== Table: users_info ==
+Description: used to store users' info
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| name | varchar
+| device_tokens | map<varchar, varchar>
+| profile_picture_id | uuid
+| registration_time | bigint
+| last_active_time | bigint
+| last_latitude | double
+| last_longitude | double
+`Partition Keys: user_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new user's user_id and name
+`INSERT INTO ig_app_data.users_info (user_id, name, registration_time, last_active_time) VALUES (:user_id, :name, :registration_time, :last_active_time);`
+**Query: add_device_token**
+adds a user's device_token
+`UPDATE ig_app_data.users_info SET device_tokens[:device_token] = :phone_type WHERE user_id = :user_id;`
+**Query: remove_device_token**
+removes a user's device_token
+`DELETE device_tokens[:device_tokens] FROM ig_app_data.users_info WHERE user_id = :user_id;`
+**Query: set_profile_picture_id**
+sets a user's profile_picture_id
+`UPDATE ig_app_data.users_info SET profile_picture_id = :profile_picture_id WHERE user_id = :user_id;`
+**Query: set_last_active_time**
+sets a user's last_active_time
+`UPDATE ig_app_data.users_info SET last_active_time = :last_active_time WHERE user_id = :user_id;`
+**Query: set_last_location**
+sets a user's last_latitude and last_longitude
+`UPDATE ig_app_data.users_info SET last_latitude = :last_latitude, last_longitude = :last_longitude WHERE user_id = :user_id;`
+**Query: select_name**
+selects a user's name
+`SELECT name FROM ig_app_data.users_info WHERE user_id = :user_id;`
+**Query: select_device_tokens**
+selects a user's device_tokens
+`SELECT device_tokens FROM ig_app_data.users_info WHERE user_id = :user_id;`
+**Query: select_profile_picture_id**
+selects a user's profile_picture_id
+`SELECT profile_picture_id FROM ig_app_data.users_info WHERE user_id = :user_id;`
+**Query: select_registration_time**
+selects a user's registration_time
+`SELECT registration_time FROM ig_app_data.users_info WHERE user_id = :user_id;`
+**Query: select_last_active_time**
+selects a user's last_active_time
+`SELECT last_active_time FROM ig_app_data.users_info WHERE user_id = :user_id;`
+**Query: select_last_location**
+selects a user's last location (latitude and longitude)
+`SELECT last_latitude, last_longitude FROM ig_app_data.users_info WHERE user_id = :user_id;`
+**Query: select_all**
+selects all user's info
+`SELECT name, device_tokens, profile_picture_id, registration_time, last_active_time, last_latitude, last_longitude FROM ig_app_data.users_info WHERE user_id = :user_id;`
+
+
+== Table: following ==
+Description: stores the users that each user follows ordered by most recently followed
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| following_time | bigint
+| following_user_id | uuid
+`Partition Keys: user_id, following_time, following_user_id`
+`Caching: ALL`
+`Order By: following_time : DESC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new followed user
+`INSERT INTO ig_app_data.following (user_id, following_time, following_user_id) VALUES (:user_id, :following_time, :following_user_id);`
+**Query: delete**
+deletes an unfollowed user
+`DELETE FROM ig_app_data.following WHERE user_id = :user_id AND following_time = :following_time AND following_user_id = :following_user_id;`
+**Query: select_recent_limit**
+selects the most recent followed users where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT following_time, following_user_id FROM ig_app_data.following WHERE user_id = :user_id LIMIT 30;`
+**Query: select_at_or_before_time_limit**
+selects followed users at-or-before a specified time where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT following_time, following_user_id FROM ig_app_data.following WHERE user_id = :user_id AND following_time <= :following_time LIMIT 30;`
+
+
+== Table: following_time ==
+Description: stores the time when a user followed another user
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| following_user_id | uuid
+| following_time | bigint
+`Partition Keys: user_id, following_user_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new followed user's time
+`INSERT INTO ig_app_data.following_time (user_id, following_user_id, following_time) VALUES (:user_id, :following_user_id, :following_time);`
+**Query: delete**
+deletes an unfollowed user's time
+`DELETE FROM ig_app_data.following_time WHERE user_id = :user_id AND following_user_id = :following_user_id;`
+**Query: select**
+selects a followed user's time
+`SELECT following_time FROM ig_app_data.following_time WHERE user_id = :user_id AND following_user_id = :following_user_id;`
+
+
+== Table: following_count ==
+Description: stores the number of users a user follows
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| following_count | counter
+`Partition Keys: user_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: increment**
+increments the number of users a user is following by one
+`UPDATE ig_app_data.following_count SET following_count = following_count + 1 WHERE user_id = :user_id;`
+**Query: increment_number**
+increments the number of users a user is following by (number) - useful in cases like follow all facebook friends
+`UPDATE ig_app_data.following_count SET following_count = following_count + :number WHERE user_id = :user_id;`
+**Query: decrement**
+decrements the number of users a user is following by one
+`UPDATE ig_app_data.following_count SET following_count = following_count - 1 WHERE user_id = :user_id;`
+**Query: select**
+selects the number of users a user is following
+`SELECT following_count FROM ig_app_data.following_count WHERE user_id = :user_id;`
+
+
+== Table: follower ==
+Description: stores the users that follow each user ordered by the most recent followers
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| follower_time | bigint
+| follower_user_id | uuid
+`Partition Keys: user_id, follower_time, follower_user_id`
+`Caching: ALL`
+`Order By: follower_time : DESC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new follower
+`INSERT INTO ig_app_data.follower (user_id, follower_time, follower_user_id) VALUES (:user_id, :follower_time, :follower_user_id);`
+**Query: delete**
+deletes an unfollowing follower
+`DELETE FROM ig_app_data.follower WHERE user_id = :user_id AND follower_time = :follower_time AND follower_user_id = :follower_user_id;`
+**Query: select_recent_limit**
+selects the most recent follower users where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT follower_time, follower_user_id FROM ig_app_data.follower WHERE user_id = :user_id LIMIT 30;`
+**Query: select_at_or_before_time_limit**
+selects follower users at-or-before a specified time where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT follower_time, follower_user_id FROM ig_app_data.follower WHERE user_id = :user_id AND follower_time <= :follower_time LIMIT 30;`
+**Query: select_all**
+selects all the followers of a user, NOTE: use paging when using this query
+`SELECT follower_time, follower_user_id FROM ig_app_data.follower WHERE user_id = :user_id;`
+
+
+== Table: follower_time ==
+Description: stores the time when a user got a new follower user
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| follower_user_id | uuid
+| follower_time | bigint
+`Partition Keys: user_id, follower_user_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new follower user's time
+`INSERT INTO ig_app_data.follower_time (user_id, follower_user_id, follower_time) VALUES (:user_id, :follower_user_id, :follower_time);`
+**Query: delete**
+deletes an follower who unfollowed user
+`DELETE FROM ig_app_data.follower_time WHERE user_id = :user_id AND follower_user_id = :follower_user_id;`
+**Query: select**
+selects a follower user's time
+`SELECT follower_time FROM ig_app_data.follower_time WHERE user_id = :user_id AND follower_user_id = :follower_user_id;`
+
+
+== Table: follower_count ==
+Description: stores the number of followers following a user
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| follower_count | counter
+`Partition Keys: user_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: increment**
+increments the number of followers following a user
+`UPDATE ig_app_data.follower_count SET follower_count = follower_count + 1 WHERE user_id = :user_id;`
+**Query: decrement**
+decrements the number of followers following a user
+`UPDATE ig_app_data.follower_count SET follower_count = follower_count - 1 WHERE user_id = :user_id;`
+**Query: select**
+selects the number of followers following a user
+`SELECT follower_count FROM ig_app_data.follower_count WHERE user_id = :user_id;`
+
+
+== Table: user_posts ==
+Description: stores posts per-user (posted by user) ordered by the most recent post
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| post_time | bigint
+| post_id | uuid
+`Partition Keys: user_id, post_time, post_id`
+`Caching: ALL`
+`Order By: post_time : DESC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new user's post
+`INSERT INTO ig_app_data.user_posts (user_id, post_time, post_id) VALUES (:user_id, :post_time, :post_id);`
+**Query: select_recent_limit**
+selects the most recent posts posted by a user where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT post_time, post_id FROM ig_app_data.user_posts WHERE user_id = :user_id LIMIT 30;`
+**Query: select_at_or_before_time_limit**
+selects posts posted by a user at or before a specified time where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT post_time, post_id FROM ig_app_data.user_posts WHERE user_id = :user_id AND post_time <= :post_time LIMIT 30;`
+
+
+== Table: user_posts_count ==
+Description: stores the number of posts posted per-user
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| posts_count | counter
+`Partition Keys: user_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: increment**
+increments the number of a user's posts by one
+`UPDATE ig_app_data.user_posts_count SET posts_count = posts_count + 1 WHERE user_id = :user_id;`
+**Query: select**
+selects the number a user's posts
+`SELECT posts_count FROM ig_app_data.user_posts_count WHERE user_id = :user_id;`
+
+
+== Table: user_feed_posts ==
+Description: stores posts per-user that a user sees in her/his feed (posted by the user or one of the users she/he is following) ordered by the most recent posts
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| post_time | bigint
+| post_id | uuid
+`Partition Keys: user_id, post_time, post_id`
+`Caching: ALL`
+`Order By: post_time : DESC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new user's feed post
+`INSERT INTO ig_app_data.user_feed_posts (user_id, post_time, post_id) VALUES (:user_id, :post_time, :post_id);`
+**Query: select_recent_limit**
+selects the most recent posts posted in a user's feed where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT post_time, post_id FROM ig_app_data.user_feed_posts WHERE user_id = :user_id LIMIT 30;`
+**Query: select_at_or_before_time_limit**
+selects posts posted in a user's feed at or before a specified time where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT post_time, post_id FROM ig_app_data.user_feed_posts WHERE user_id = :user_id AND post_time <= :post_time LIMIT 30;`
+
+
+== Table: posts ==
+Description: stores posts' info
+===== Columns =====
+| **Name** | **Type**
+| post_id | uuid
+| post_time | bigint
+| photo_id | uuid
+| caption | varchar
+| user_id | uuid
+| latitude | double
+| longitude | double
+`Partition Keys: post_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new post's info
+`INSERT INTO ig_app_data.posts (post_id, post_time, photo_id, caption, user_id, latitude, longitude) VALUES (:post_id, :post_time, :photo_id, :caption, :user_id, :latitude, :longitude);`
+**Query: insert_without_location**
+inserts a new post's info without location
+`INSERT INTO ig_app_data.posts (post_id, post_time, photo_id, caption, user_id) VALUES (:post_id, :post_time, :photo_id, :caption, :user_id);`
+**Query: select_time**
+selects a post's time
+`SELECT post_time FROM ig_app_data.posts WHERE post_id = :post_id;`
+**Query: select_user_id**
+selects a post's owner user_id
+`SELECT user_id FROM ig_app_data.posts WHERE post_id = :post_id;`
+**Query: select_photo_id**
+selects a post's photo_id
+`SELECT photo_id FROM ig_app_data.posts WHERE post_id = :post_id;`
+**Query: select**
+selects a post's info
+`SELECT post_time, photo_id, caption, user_id, latitude, longitude FROM ig_app_data.posts WHERE post_id = :post_id;`
+
+
+== Table: post_likes ==
+Description: stores who likes a post per-post ordered by the most recent likes
+===== Columns =====
+| **Name** | **Type**
+| post_id | uuid
+| like_time | bigint
+| user_id | uuid
+`Partition Keys: post_id, like_time, user_id`
+`Caching: ALL`
+`Order By: like_time : DESC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new post's like
+`INSERT INTO ig_app_data.post_likes (post_id, like_time, user_id) VALUES (:post_id, :like_time, :user_id);`
+**Query: delete**
+deletes a post's like
+`DELETE FROM ig_app_data.post_likes WHERE post_id = :post_id AND like_time = :like_time AND user_id = :user_id;`
+**Query: select_recent_limit**
+selects the most recent post's likes where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT like_time, user_id FROM ig_app_data.post_likes WHERE post_id = :post_id LIMIT 30;`
+**Query: select_at_or_before_time_limit**
+selects post's likes at-or-before a specified time where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT like_time, user_id FROM ig_app_data.post_likes WHERE post_id = :post_id AND like_time <= :like_time LIMIT 30;`
+
+
+== Table: post_likes_time ==
+Description: stores the time when a user liked a post
+===== Columns =====
+| **Name** | **Type**
+| post_id | uuid
+| user_id | uuid
+| like_time | bigint
+`Partition Keys: post_id, user_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a post's like time
+`INSERT INTO ig_app_data.post_likes_time (post_id, user_id, like_time) VALUES (:post_id, :user_id, :like_time);`
+**Query: delete**
+deletes a post's like time (after an unlike)
+`DELETE FROM ig_app_data.post_likes_time WHERE post_id = :post_id AND user_id = :user_id;`
+**Query: select**
+selects a post's like time
+`SELECT like_time FROM ig_app_data.post_likes_time WHERE post_id = :post_id AND user_id = :user_id;`
+
+
+== Table: post_likes_count ==
+Description: stores the number of likes a post got
+===== Columns =====
+| **Name** | **Type**
+| post_id | uuid
+| likes_count | counter
+`Partition Keys: post_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: increment**
+increments the likes a post got by one
+`UPDATE ig_app_data.post_likes_count SET likes_count = likes_count + 1 WHERE post_id = :post_id;`
+**Query: decrement**
+decrements the likes a post got by one
+`UPDATE ig_app_data.post_likes_count SET likes_count = likes_count - 1 WHERE post_id = :post_id;`
+**Query: select**
+selects the number of likes a post got
+`SELECT likes_count FROM ig_app_data.post_likes_count WHERE post_id = :post_id;`
+
+
+== Table: post_comments ==
+Description: stores who commented on a post per-post along with the comment's content ordered by the most recent likes
+===== Columns =====
+| **Name** | **Type**
+| post_id | uuid
+| comment_time | bigint
+| user_id | uuid
+| comment | varchar
+`Partition Keys: post_id, comment_time, user_id`
+`Caching: ALL`
+`Order By: comment_time : DESC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new post's comment
+`INSERT INTO ig_app_data.post_comments (post_id, comment_time, user_id, comment) VALUES (:post_id, :comment_time, :user_id, :comment);`
+**Query: delete**
+deletes a post's comment
+`DELETE FROM ig_app_data.post_comments WHERE post_id = :post_id AND comment_time = :comment_time AND user_id = :user_id;`
+**Query: select_recent_limit**
+selects the most recent post's comments where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT comment_time, user_id, comment FROM ig_app_data.post_comments WHERE post_id = :post_id LIMIT 30;`
+**Query: select_at_or_before_time_limit**
+selects post's comments at-or-before a specified time where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT comment_time, user_id, comment FROM ig_app_data.post_comments WHERE post_id = :post_id AND comment_time <= :comment_time LIMIT 30;`
+
+
+== Table: post_comments_time ==
+Description: stores the time when a user commented on a post
+===== Columns =====
+| **Name** | **Type**
+| post_id | uuid
+| user_id | uuid
+| comment_time | bigint
+`Partition Keys: post_id, user_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a post's comment time
+`INSERT INTO ig_app_data.post_comments_time (post_id, user_id, comment_time) VALUES (:post_id, :user_id, :comment_time);`
+**Query: delete**
+deletes a post's comment time (after deleting a comment)
+`DELETE FROM ig_app_data.post_comments_time WHERE post_id = :post_id AND user_id = :user_id;`
+**Query: select**
+selects a post's comment time
+`SELECT comment_time FROM ig_app_data.post_comments_time WHERE post_id = :post_id AND user_id = :user_id;`
+
+
+== Table: post_comments_count ==
+Description: stores the number of comments a post got
+===== Columns =====
+| **Name** | **Type**
+| post_id | uuid
+| comments_count | counter
+`Partition Keys: post_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: increment**
+increments the comments a post got by one
+`UPDATE ig_app_data.post_comments_count SET comments_count = comments_count + 1 WHERE post_id = :post_id;`
+**Query: decrement**
+decrements the comments a post got by one
+`UPDATE ig_app_data.post_comments_count SET comments_count = comments_count - 1 WHERE post_id = :post_id;`
+**Query: select**
+selects the number of comments a post got
+`SELECT comments_count FROM ig_app_data.post_comments_count WHERE post_id = :post_id;`
+
+
+== Table: users_index ==
+Description: indexes all user ids partitioned by registration day -- to enable iterating on all registered users
+===== Columns =====
+| **Name** | **Type**
+| year_month_day | varchar
+| registration_time | bigint
+| user_id | uuid
+`Partition Keys: year_month_day, registration_time, user_id`
+`Caching: ALL`
+`Order By: registration_time : ASC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new registered user
+`INSERT INTO ig_app_data.users_index (year_month_day, registration_time, user_id) VALUES (:year_month_day, :registration_time, :user_id);`
+**Query: select_earliest_limit**
+selects earliest registered users on a day where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT registration_time, user_id FROM ig_app_data.users_index WHERE year_month_day = :year_month_day LIMIT 30;`
+**Query: select_equal**
+selects users registered on a day having a specific registration time
+`SELECT registration_time, user_id FROM ig_app_data.users_index WHERE year_month_day = :year_month_day AND registration_time = :registration_time;`
+**Query: select_at_or_after_limit**
+selects registered users on a day at or after a specific time where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT registration_time, user_id FROM ig_app_data.users_index WHERE year_month_day = :year_month_day AND registration_time >= :registration_time LIMIT 30;`
+**Query: select_after_limit**
+selects registered users on a day after a specific time where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT registration_time, user_id FROM ig_app_data.users_index WHERE year_month_day = :year_month_day AND registration_time > :registration_time LIMIT 30;`
+**Query: select**
+selects all users registered on a day, consider using paging when using this query
+`SELECT registration_time, user_id FROM ig_app_data.users_index WHERE year_month_day = :year_month_day;`
+
+
+== Table: count_per_week ==
+Description: stores user-related counts per-week (e.g.: new followers, new unfollowers, new posts, ...) -- used for ranking/scoring
+===== Columns =====
+| **Name** | **Type**
+| user_id_year_week | varchar
+| follower_count | counter
+| unfollower_count | counter
+| posts_count | counter
+| likes_received_count | counter
+| comments_received_count | counter
+`Partition Keys: user_id_year_week`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: increment_follower_count**
+increments new followers count
+`UPDATE ig_app_data.count_per_week SET follower_count = follower_count + 1 WHERE user_id_year_week = :user_id_year_week;`
+**Query: increment_unfollower_count**
+increments new unfollowers count
+`UPDATE ig_app_data.count_per_week SET unfollower_count = unfollower_count + 1 WHERE user_id_year_week = :user_id_year_week;`
+**Query: increment_posts_count**
+increments new posts by user count
+`UPDATE ig_app_data.count_per_week SET posts_count = posts_count + 1 WHERE user_id_year_week = :user_id_year_week;`
+**Query: increment_likes_received_count**
+increments received likes count
+`UPDATE ig_app_data.count_per_week SET likes_received_count = likes_received_count + 1 WHERE user_id_year_week = :user_id_year_week;`
+**Query: increment_comments_received_count**
+increments received comments count
+`UPDATE ig_app_data.count_per_week SET comments_received_count = comments_received_count + 1 WHERE user_id_year_week = :user_id_year_week;`
+**Query: select**
+selects all counters
+`SELECT follower_count, unfollower_count, posts_count, likes_received_count, comments_received_count FROM ig_app_data.count_per_week WHERE user_id_year_week = :user_id_year_week;`
+
+
+== Table: count_total ==
+Description: stores user-related counts (e.g.: total likes/comments received, ...) -- used for ranking/scoring
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| likes_received_count | counter
+| comments_received_count | counter
+`Partition Keys: user_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: increment_likes_received_count**
+increments received likes count
+`UPDATE ig_app_data.count_total SET likes_received_count = likes_received_count + 1 WHERE user_id = :user_id;`
+**Query: increment_comments_received_count**
+increments received comments count
+`UPDATE ig_app_data.count_total SET comments_received_count = comments_received_count + 1 WHERE user_id = :user_id;`
+**Query: select**
+selects all counters
+`SELECT likes_received_count, comments_received_count FROM ig_app_data.count_total WHERE user_id = :user_id;`
+
+
+== Table: users_rank_world ==
+Description: ranks the top N (e.g.: 100) users world wide each week
+===== Columns =====
+| **Name** | **Type**
+| year_week | varchar
+| rank | double
+| user_id | uuid
+`Partition Keys: year_week, rank, user_id`
+`Caching: ALL`
+`Order By: rank : DESC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a user's rank
+`INSERT INTO ig_app_data.users_rank_world (year_week, rank, user_id) VALUES (:year_week, :rank, :user_id);`
+**Query: select_top_limit**
+selects the top ranked users world wide where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, user_id FROM ig_app_data.users_rank_world WHERE year_week = :year_week LIMIT 30;`
+**Query: select_top_equal**
+selects the top ranked users world wide having a specific rank value
+`SELECT rank, user_id FROM ig_app_data.users_rank_world WHERE year_week = :year_week AND rank = :rank;`
+**Query: select_top_smaller_than_or_equal_limit**
+selects the top ranked users world wide having a rank smaller than or equal to a specified rank value and the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, user_id FROM ig_app_data.users_rank_world WHERE year_week = :year_week AND rank <= :rank LIMIT 30;`
+**Query: select_top_smaller_than_limit**
+selects the top ranked users world wide having a rank smaller than a specified rank value and the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, user_id FROM ig_app_data.users_rank_world WHERE year_week = :year_week AND rank < :rank LIMIT 30;`
+
+
+== Table: users_rank_country ==
+Description: ranks the top N (e.g.: 100) users by country each week
+===== Columns =====
+| **Name** | **Type**
+| year_week_country_code | varchar
+| rank | double
+| user_id | uuid
+`Partition Keys: year_week_country_code, rank, user_id`
+`Caching: ALL`
+`Order By: rank : DESC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a user's rank
+`INSERT INTO ig_app_data.users_rank_country (year_week_country_code, rank, user_id) VALUES (:year_week_country_code, :rank, :user_id);`
+**Query: select_top_limit**
+selects the top ranked users in a country where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, user_id FROM ig_app_data.users_rank_country WHERE year_week_country_code = :year_week_country_code LIMIT 30;`
+**Query: select_top_equal**
+selects the top ranked users in a country having a specific rank value
+`SELECT rank, user_id FROM ig_app_data.users_rank_country WHERE year_week_country_code = :year_week_country_code AND rank = :rank;`
+**Query: select_top_smaller_than_or_equal_limit**
+selects the top ranked users from a country having a rank smaller than or equal to a specified rank value and the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, user_id FROM ig_app_data.users_rank_country WHERE year_week_country_code = :year_week_country_code AND rank <= :rank LIMIT 30;`
+**Query: select_top_smaller_than_limit**
+selects the top ranked users from a country having a rank smaller than a specified rank value and the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, user_id FROM ig_app_data.users_rank_country WHERE year_week_country_code = :year_week_country_code AND rank < :rank LIMIT 30;`
+
+
+== Table: users_rank_grid ==
+Description: ranks all users in a grid (e.g.: 10 KM x 10 KM) each week
+===== Columns =====
+| **Name** | **Type**
+| year_week_grid_id | varchar
+| rank | double
+| user_id | uuid
+`Partition Keys: year_week_grid_id, rank, user_id`
+`Caching: ALL`
+`Order By: rank : DESC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a user's rank
+`INSERT INTO ig_app_data.users_rank_grid (year_week_grid_id, rank, user_id) VALUES (:year_week_grid_id, :rank, :user_id);`
+**Query: select_top_limit**
+selects the top ranked users in a grid where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, user_id FROM ig_app_data.users_rank_grid WHERE year_week_grid_id = :year_week_grid_id LIMIT 30;`
+**Query: select_grids_top_limit**
+selects the top ranked users in a group of grids where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, user_id FROM ig_app_data.users_rank_grid WHERE year_week_grid_id IN :year_week_grid_ids LIMIT 30;`
+**Query: select_top_equal**
+selects the top ranked users in a grid having a specific rank value
+`SELECT rank, user_id FROM ig_app_data.users_rank_grid WHERE year_week_grid_id = :year_week_grid_id AND rank = :rank;`
+**Query: select_top_smaller_than_or_equal_limit**
+selects the top ranked users in a grid having a rank smaller than or equal to a specified rank value and the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, user_id FROM ig_app_data.users_rank_grid WHERE year_week_grid_id = :year_week_grid_id AND rank <= :rank LIMIT 30;`
+**Query: select_top_smaller_than_limit**
+selects the top ranked users in a grid having a rank smaller than a specified rank value and the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, user_id FROM ig_app_data.users_rank_grid WHERE year_week_grid_id = :year_week_grid_id AND rank < :rank LIMIT 30;`
+
+
+== Table: posts_index ==
+Description: indexes all posts by-day by-grid-id -- to enable iterating on all posts per-day per-grid
+===== Columns =====
+| **Name** | **Type**
+| year_month_day_grid_id | varchar
+| post_time | bigint
+| post_id | uuid
+`Partition Keys: year_month_day_grid_id, post_time, post_id`
+`Caching: ALL`
+`Order By: post_time : ASC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new post
+`INSERT INTO ig_app_data.posts_index (year_month_day_grid_id, post_time, post_id) VALUES (:year_month_day_grid_id, :post_time, :post_id);`
+**Query: select_earliest_limit**
+selects earliest posted posts on a day in a grid where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT post_time, post_id FROM ig_app_data.posts_index WHERE year_month_day_grid_id = :year_month_day_grid_id LIMIT 30;`
+**Query: select_equal**
+selects posts posted on a day in a grid having a specific post time
+`SELECT post_time, post_id FROM ig_app_data.posts_index WHERE year_month_day_grid_id = :year_month_day_grid_id AND post_time = :post_time;`
+**Query: select_at_or_after_limit**
+selects posted posts on a day in a grid at or after a specific time where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT post_time, post_id FROM ig_app_data.posts_index WHERE year_month_day_grid_id = :year_month_day_grid_id AND post_time >= :post_time LIMIT 30;`
+**Query: select_after_limit**
+selects posted posts on a day after a specific time where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT post_time, post_id FROM ig_app_data.posts_index WHERE year_month_day_grid_id = :year_month_day_grid_id AND post_time > :post_time LIMIT 30;`
+**Query: select**
+selects all posts posted in a grid on a day, consider using paging when using this query
+`SELECT post_time, post_id FROM ig_app_data.posts_index WHERE year_month_day_grid_id = :year_month_day_grid_id;`
+
+
+== Table: posts_rank_world ==
+Description: ranks the top N (e.g.: 1000) posts world wide each day -- based on top world wide users' posts
+===== Columns =====
+| **Name** | **Type**
+| year_month_day | varchar
+| rank | double
+| post_id | uuid
+`Partition Keys: year_month_day, rank, post_id`
+`Caching: ALL`
+`Order By: rank : DESC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a post's rank
+`INSERT INTO ig_app_data.posts_rank_world (year_month_day, rank, post_id) VALUES (:year_week, :rank, :post_id);`
+**Query: select_top_limit**
+selects the top ranked posts world wide where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, post_id FROM ig_app_data.posts_rank_world WHERE year_month_day = :year_month_day LIMIT 30;`
+**Query: select_top_equal**
+selects the top ranked posts world wide having a specific rank value
+`SELECT rank, post_id FROM ig_app_data.posts_rank_world WHERE year_month_day = :year_month_day AND rank = :rank;`
+**Query: select_top_smaller_than_or_equal_limit**
+selects the top ranked posts world wide having a rank smaller than or equal to a specified rank value and the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, post_id FROM ig_app_data.posts_rank_world WHERE year_month_day = :year_month_day AND rank <= :rank LIMIT 30;`
+**Query: select_top_smaller_than_limit**
+selects the top ranked posts world wide having a rank smaller than a specified rank value and the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, post_id FROM ig_app_data.posts_rank_world WHERE year_month_day = :year_month_day AND rank < :rank LIMIT 30;`
+
+
+== Table: posts_rank_country ==
+Description: ranks the top N (e.g.: 1000) posts by country each day
+===== Columns =====
+| **Name** | **Type**
+| year_month_day_country_code | varchar
+| rank | double
+| post_id | uuid
+`Partition Keys: year_month_day_country_code, rank, post_id`
+`Caching: ALL`
+`Order By: rank : DESC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a post's rank
+`INSERT INTO ig_app_data.posts_rank_country (year_month_day_country_code, rank, post_id) VALUES (:year_month_day_country_code, :rank, :post_id);`
+**Query: select_top_limit**
+selects the top ranked posts in a country where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, post_id FROM ig_app_data.posts_rank_country WHERE year_month_day_country_code = :year_month_day_country_code LIMIT 30;`
+**Query: select_top_equal**
+selects the top ranked posts in a country having a specific rank value
+`SELECT rank, post_id FROM ig_app_data.posts_rank_country WHERE year_month_day_country_code = :year_month_day_country_code AND rank = :rank;`
+**Query: select_top_smaller_than_or_equal_limit**
+selects the top ranked posts from a country having a rank smaller than or equal to a specified rank value and the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, post_id FROM ig_app_data.posts_rank_country WHERE year_month_day_country_code = :year_month_day_country_code AND rank <= :rank LIMIT 30;`
+**Query: select_top_smaller_than_limit**
+selects the top ranked posts from a country having a rank smaller than a specified rank value and the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, post_id FROM ig_app_data.posts_rank_country WHERE year_month_day_country_code = :year_month_day_country_code AND rank < :rank LIMIT 30;`
+
+
+== Table: posts_rank_grid ==
+Description: ranks all recent posts in a grid (e.g.: 10 KM x 10 KM) each day
+===== Columns =====
+| **Name** | **Type**
+| year_month_day_grid_id | varchar
+| rank | double
+| post_id | uuid
+`Partition Keys: year_month_day_grid_id, rank, post_id`
+`Caching: ALL`
+`Order By: rank : DESC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a post's rank
+`INSERT INTO ig_app_data.posts_rank_grid (year_month_day_grid_id, rank, post_id) VALUES (:year_month_day_grid_id, :rank, :post_id);`
+**Query: select_top_limit**
+selects the top ranked posts in a grid where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, post_id FROM ig_app_data.posts_rank_grid WHERE year_month_day_grid_id = :year_month_day_grid_id LIMIT 30;`
+**Query: select_grids_top_limit**
+selects the top ranked posts in a group of grids where the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, post_id FROM ig_app_data.posts_rank_grid WHERE year_month_day_grid_id IN :year_month_day_grid_ids LIMIT 30;`
+**Query: select_top_equal**
+selects the top ranked posts in a grid having a specific rank value
+`SELECT rank, post_id FROM ig_app_data.posts_rank_grid WHERE year_month_day_grid_id = :year_month_day_grid_id AND rank = :rank;`
+**Query: select_top_smaller_than_or_equal_limit**
+selects the top ranked posts in a grid having a rank smaller than or equal to a spcified rank value and the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, post_id FROM ig_app_data.posts_rank_grid WHERE year_month_day_grid_id = :year_month_day_grid_id AND rank <= :rank LIMIT 30;`
+**Query: select_top_smaller_than_limit**
+selects the top ranked posts in a grid having a rank smaller than a spcified rank value and the returned count is limited by the value of limit (e.g.: 10)
+`SELECT rank, post_id FROM ig_app_data.posts_rank_grid WHERE year_month_day_grid_id = :year_month_day_grid_id AND rank < :rank LIMIT 30;`
+
+

@@ -1,0 +1,183 @@
+= **Keyspace: ig_logging** =
+Description: used for all logging-related tables
+===== Replications =====
+| **Name** | **Replication** | **Description**
+| dev | 'class': 'SimpleStrategy', 'replication_factor' : 1 | used for dev environment
+
+== Table: daily_requests_counters ==
+Description: stores counters per-day for all controllers and per-controller
+===== Columns =====
+| **Name** | **Type**
+| year_month_day_controller | varchar
+| requests | counter
+| ok_responses | counter
+| bad_request_responses | counter
+| internal_error_responses | counter
+| run_time_milli_seconds | counter
+`Partition Keys: year_month_day_controller`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: increment_ok_responses**
+increments requests with OK responses
+`UPDATE ig_logging.daily_requests_counters SET requests = requests + 1, ok_responses = ok_responses + 1, run_time_milli_seconds = run_time_milli_seconds + :run_time_milli_seconds WHERE year_month_day_controller = :year_month_day_controller;`
+**Query: increment_bad_request_responses**
+increments requests with BAD_REQUEST responses
+`UPDATE ig_logging.daily_requests_counters SET requests = requests + 1, bad_request_responses = bad_request_responses + 1, run_time_milli_seconds = run_time_milli_seconds + :run_time_milli_seconds WHERE year_month_day_controller = :year_month_day_controller;`
+**Query: increment_internal_error_responses**
+increments requests with INTERNAL_ERROR responses
+`UPDATE ig_logging.daily_requests_counters SET requests = requests + 1, internal_error_responses = internal_error_responses + 1, run_time_milli_seconds = run_time_milli_seconds + :run_time_milli_seconds WHERE year_month_day_controller = :year_month_day_controller;`
+**Query: select**
+selects counters per-hour
+`SELECT requests, ok_responses, bad_request_responses, internal_error_responses, run_time_milli_seconds FROM ig_logging.daily_requests_counters WHERE year_month_day_controller = :year_month_day_controller;`
+
+
+== Table: hourly_requests_counters ==
+Description: stores counters per-hour for all controllers and per-controller
+===== Columns =====
+| **Name** | **Type**
+| year_month_day_hour_controller | varchar
+| requests | counter
+| ok_responses | counter
+| bad_request_responses | counter
+| internal_error_responses | counter
+| run_time_milli_seconds | counter
+`Partition Keys: year_month_day_hour_controller`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: increment_ok_responses**
+increments requests with OK responses
+`UPDATE ig_logging.hourly_requests_counters SET requests = requests + 1, ok_responses = ok_responses + 1, run_time_milli_seconds = run_time_milli_seconds + :run_time_milli_seconds WHERE year_month_day_hour_controller = :year_month_day_hour_controller;`
+**Query: increment_bad_request_responses**
+increments requests with BAD_REQUEST responses
+`UPDATE ig_logging.hourly_requests_counters SET requests = requests + 1, bad_request_responses = bad_request_responses + 1, run_time_milli_seconds = run_time_milli_seconds + :run_time_milli_seconds WHERE year_month_day_hour_controller = :year_month_day_hour_controller;`
+**Query: increment_internal_error_responses**
+increments requests with INTERNAL_ERROR responses
+`UPDATE ig_logging.hourly_requests_counters SET requests = requests + 1, internal_error_responses = internal_error_responses + 1, run_time_milli_seconds = run_time_milli_seconds + :run_time_milli_seconds WHERE year_month_day_hour_controller = :year_month_day_hour_controller;`
+**Query: select**
+selects counters per-hour
+`SELECT requests, ok_responses, bad_request_responses, internal_error_responses, run_time_milli_seconds FROM ig_logging.hourly_requests_counters WHERE year_month_day_hour_controller = :year_month_day_hour_controller;`
+
+
+== Table: error_logs ==
+Description: stores logs for failed requests (because of bad request or internal error)
+===== Columns =====
+| **Name** | **Type**
+| log_id | uuid
+| log_time | bigint
+| controller_name | varchar
+| user_id | uuid
+| http_status_code | int
+| request | varchar
+| error_response | varchar
+`Partition Keys: log_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new log
+`INSERT INTO ig_logging.error_logs (log_id, log_time, controller_name, user_id, http_status_code, request, error_response) VALUES (:log_id, :log_time, :controller_name, :user_id, :http_status_code, :request, :error_response);`
+**Query: select**
+selects a log
+`SELECT log_time, controller_name, user_id, http_status_code, request, error_response FROM ig_logging.error_logs WHERE log_id = :log_id;`
+
+
+== Table: hourly_controllers_error_logs ==
+Description: indexes logs for failed requests per-controller(s) per-hour sorted by oldest
+===== Columns =====
+| **Name** | **Type**
+| year_month_day_hour_controller | varchar
+| log_time | bigint
+| log_id | uuid
+`Partition Keys: year_month_day_hour_controller, log_time, log_id`
+`Caching: ALL`
+`Order By: log_time : ASC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new log's index
+`INSERT INTO ig_logging.hourly_controllers_error_logs (year_month_day_hour_controller, log_time, log_id) VALUES (:year_month_day_hour_controller, :log_time, :log_id);`
+**Query: select**
+selects all controller(s)' logs during an hour
+`SELECT log_time, log_id FROM ig_logging.hourly_controllers_error_logs WHERE year_month_day_hour_controller = :year_month_day_hour_controller;`
+**Query: select_after**
+selects all controller(s)' logs during an hour after a specific time
+`SELECT log_time, log_id FROM ig_logging.hourly_controllers_error_logs WHERE year_month_day_hour_controller = :year_month_day_hour_controller AND log_time > :log_time;`
+**Query: select_before**
+selects all controller(s)' logs during an hour before a specific time
+`SELECT log_time, log_id FROM ig_logging.hourly_controllers_error_logs WHERE year_month_day_hour_controller = :year_month_day_hour_controller AND log_time < :log_time;`
+**Query: select_during**
+selects all controller(s)' logs during an hour during a specific period
+`SELECT log_time, log_id FROM ig_logging.hourly_controllers_error_logs WHERE year_month_day_hour_controller = :year_month_day_hour_controller AND log_time >= :log_time_start AND log_time <= :log_time_end;`
+
+
+== Table: daily_users_error_logs ==
+Description: indexes logs for failed requests per-user per-day sorted by oldest
+===== Columns =====
+| **Name** | **Type**
+| year_month_day_user_id | varchar
+| log_time | bigint
+| log_id | uuid
+`Partition Keys: year_month_day_user_id, log_time, log_id`
+`Caching: ALL`
+`Order By: log_time : ASC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new log's index
+`INSERT INTO ig_logging.daily_users_error_logs (year_month_day_user_id, log_time, log_id) VALUES (:year_month_day_user_id, :log_time, :log_id);`
+**Query: select**
+selects all user's logs during a day
+`SELECT log_time, log_id FROM ig_logging.daily_users_error_logs WHERE year_month_day_user_id = :year_month_day_user_id;`
+**Query: select_after**
+selects all user's logs during a day after a specific time
+`SELECT log_time, log_id FROM ig_logging.daily_users_error_logs WHERE year_month_day_user_id = :year_month_day_user_id AND log_time > :log_time;`
+**Query: select_before**
+selects all user's logs during a day before a specific time
+`SELECT log_time, log_id FROM ig_logging.daily_users_error_logs WHERE year_month_day_user_id = :year_month_day_user_id AND log_time < :log_time;`
+**Query: select_during**
+selects all user's logs during a day during a specific period
+`SELECT log_time, log_id FROM ig_logging.daily_users_error_logs WHERE year_month_day_user_id = :year_month_day_user_id AND log_time >= :log_time_start AND log_time <= :log_time_end;`
+
+
+== Table: daily_users_logs ==
+Description: stores abstract users' requests per-user per-day sorted by oldest
+===== Columns =====
+| **Name** | **Type**
+| year_month_day_user_id | varchar
+| log_time | bigint
+| request_id | uuid
+| controller_name | varchar
+| request | varchar
+| response_status_code | varchar
+| response | varchar
+| run_time_milli_seconds | int
+`Partition Keys: year_month_day_user_id, log_time, request_id`
+`Caching: ALL`
+`Order By: log_time : ASC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new user's logs
+`INSERT INTO ig_logging.daily_users_logs (year_month_day_user_id, log_time, request_id, controller_name, request, response_status_code, response, run_time_milli_seconds) VALUES (:year_month_day_user_id, :log_time, :request_id, :controller_name, :request, :response_status_code, :response, :run_time_milli_seconds);`
+**Query: select**
+selects user's logs during a day
+`SELECT log_time, request_id, controller_name, request, response_status_code, response, run_time_milli_seconds FROM ig_logging.daily_users_logs WHERE year_month_day_user_id = :year_month_day_user_id;`
+**Query: select_after**
+selects user's logs after a sepcific time
+`SELECT log_time, request_id, controller_name, request, response_status_code, response, run_time_milli_seconds FROM ig_logging.daily_users_logs WHERE year_month_day_user_id = :year_month_day_user_id AND log_time > :log_time;`
+**Query: select_before**
+selects user's logs before a specific time
+`SELECT log_time, request_id, controller_name, request, response_status_code, response, run_time_milli_seconds FROM ig_logging.daily_users_logs WHERE year_month_day_user_id = :year_month_day_user_id AND log_time < :log_time;`
+**Query: select_during**
+selects user's logs
+`SELECT log_time, request_id, controller_name, request, response_status_code, response, run_time_milli_seconds FROM ig_logging.daily_users_logs WHERE year_month_day_user_id = :year_month_day_user_id AND log_time >= :log_time_start AND log_time <= :log_time_end;`
+
+

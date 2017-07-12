@@ -1,0 +1,116 @@
+= **Keyspace: ig_analytics** =
+Description: used for all analytics-related tables
+===== Replications =====
+| **Name** | **Replication** | **Description**
+| dev | 'class': 'SimpleStrategy', 'replication_factor' : 1 | used for dev environment
+
+== Table: annual_regional_counters ==
+Description: stores counters per-year per-region (world, continent, country, ...)
+===== Columns =====
+| **Name** | **Type**
+| year_region | varchar
+| new_users | counter
+| new_posts | counter
+| sent_follows | counter
+| received_follows | counter
+| sent_unfollows | counter
+| received_unfollows | counter
+| sent_likes | counter
+| received_likes | counter
+| sent_comments | counter
+| received_comments | counter
+`Partition Keys: year_region`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: increment_new_users**
+increments new_users
+`UPDATE ig_analytics.annual_regional_counters SET new_users = new_users + 1 WHERE year_region = :year_region;`
+**Query: increment_new_posts**
+increments new_posts
+`UPDATE ig_analytics.annual_regional_counters SET new_posts = new_posts + 1 WHERE year_region = :year_region;`
+**Query: increment_sent_follows**
+increments sent_follows
+`UPDATE ig_analytics.annual_regional_counters SET sent_follows = sent_follows + 1 WHERE year_region = :year_region;`
+**Query: increment_received_follows**
+increments received_follows
+`UPDATE ig_analytics.annual_regional_counters SET received_follows = received_follows + 1 WHERE year_region = :year_region;`
+**Query: increment_sent_unfollows**
+increments sent_unfollows
+`UPDATE ig_analytics.annual_regional_counters SET sent_unfollows = sent_unfollows + 1 WHERE year_region = :year_region;`
+**Query: increment_received_unfollows**
+increments received_unfollows
+`UPDATE ig_analytics.annual_regional_counters SET received_unfollows = received_unfollows + 1 WHERE year_region = :year_region;`
+**Query: increment_sent_likes**
+increments sent_likes
+`UPDATE ig_analytics.annual_regional_counters SET sent_likes = sent_likes + 1 WHERE year_region = :year_region;`
+**Query: increment_received_likes**
+increments received_likes
+`UPDATE ig_analytics.annual_regional_counters SET received_likes = received_likes + 1 WHERE year_region = :year_region;`
+**Query: increment_sent_comments**
+increments sent_comments
+`UPDATE ig_analytics.annual_regional_counters SET sent_comments = sent_comments + 1 WHERE year_region = :year_region;`
+**Query: increment_received_comments**
+increments received_comments
+`UPDATE ig_analytics.annual_regional_counters SET received_comments = received_comments + 1 WHERE year_region = :year_region;`
+**Query: select**
+selects counters per-year per-region
+`SELECT new_users, new_posts, sent_follows, received_follows, sent_unfollows, received_unfollows, sent_likes, received_likes, sent_comments, received_comments FROM ig_analytics.annual_regional_counters WHERE year_region = :year_region;`
+
+
+== Table: daily_regional_counters ==
+Description: stores counters per-day per-region (world, continent, country, ...)
+===== Columns =====
+| **Name** | **Type**
+| year_month_day_region | varchar
+| new_users | counter
+| new_posts | counter
+| sent_follows | counter
+| received_follows | counter
+| sent_unfollows | counter
+| received_unfollows | counter
+| sent_likes | counter
+| received_likes | counter
+| sent_comments | counter
+| received_comments | counter
+`Partition Keys: year_month_day_region`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: increment_new_users**
+increments new_users
+`UPDATE ig_analytics.daily_regional_counters SET new_users = new_users + 1 WHERE year_month_day_region = :year_month_day_region;`
+**Query: increment_new_posts**
+increments new_posts
+`UPDATE ig_analytics.daily_regional_counters SET new_posts = new_posts + 1 WHERE year_month_day_region = :year_month_day_region;`
+**Query: increment_sent_follows**
+increments sent_follows
+`UPDATE ig_analytics.daily_regional_counters SET sent_follows = sent_follows + 1 WHERE year_month_day_region = :year_month_day_region;`
+**Query: increment_received_follows**
+increments received_follows
+`UPDATE ig_analytics.daily_regional_counters SET received_follows = received_follows + 1 WHERE year_month_day_region = :year_month_day_region;`
+**Query: increment_sent_unfollows**
+increments sent_unfollows
+`UPDATE ig_analytics.daily_regional_counters SET sent_unfollows = sent_unfollows + 1 WHERE year_month_day_region = :year_month_day_region;`
+**Query: increment_received_unfollows**
+increments received_unfollows
+`UPDATE ig_analytics.daily_regional_counters SET received_unfollows = received_unfollows + 1 WHERE year_month_day_region = :year_month_day_region;`
+**Query: increment_sent_likes**
+increments sent_likes
+`UPDATE ig_analytics.daily_regional_counters SET sent_likes = sent_likes + 1 WHERE year_month_day_region = :year_month_day_region;`
+**Query: increment_received_likes**
+increments received_likes
+`UPDATE ig_analytics.daily_regional_counters SET received_likes = received_likes + 1 WHERE year_month_day_region = :year_month_day_region;`
+**Query: increment_sent_comments**
+increments sent_comments
+`UPDATE ig_analytics.daily_regional_counters SET sent_comments = sent_comments + 1 WHERE year_month_day_region = :year_month_day_region;`
+**Query: increment_received_comments**
+increments received_comments
+`UPDATE ig_analytics.daily_regional_counters SET received_comments = received_comments + 1 WHERE year_month_day_region = :year_month_day_region;`
+**Query: select**
+selects counters per-year per-region
+`SELECT new_users, new_posts, sent_follows, received_follows, sent_unfollows, received_unfollows, sent_likes, received_likes, sent_comments, received_comments FROM ig_analytics.daily_regional_counters WHERE year_month_day_region = :year_month_day_region;`
+
+

@@ -1,0 +1,202 @@
+= **Keyspace: ig_auth** =
+Description: used for all authentication-related tables
+===== Replications =====
+| **Name** | **Replication** | **Description**
+| dev | 'class': 'SimpleStrategy', 'replication_factor' : 1 | used for dev environment
+
+== Table: access_tokens ==
+Description: used to store users' access tokens
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| device_token | varchar
+| access_token | varchar
+| time_stamp | bigint
+| expired | boolean
+`Partition Keys: user_id, device_token`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a user's access token
+`INSERT INTO ig_auth.access_tokens (user_id, device_token, access_token, time_stamp, expired) VALUES (:user_id, :device_token, :access_token, :time_stamp, false);`
+**Query: update**
+updates a user's access token
+`UPDATE ig_auth.access_tokens SET access_token = :access_token, time_stamp = :time_stamp, expired = false WHERE user_id = :user_id AND device_token = :device_token;`
+**Query: expire**
+updates the auth token's expried flag to false when it gets expired
+`UPDATE ig_auth.access_tokens SET expired = true WHERE user_id = :user_id AND device_token = :device_token;`
+**Query: select**
+selects a user's access token
+`SELECT access_token, time_stamp, expired FROM ig_auth.access_tokens WHERE user_id = :user_id AND device_token = :device_token;`
+**Query: delete**
+delets a user's access token upon logout
+`DELETE FROM ig_auth.access_tokens WHERE user_id = :user_id AND device_token = :device_token;`
+**Query: delete_all**
+deletes all user's access tokens upon logging out from all devices
+`DELETE FROM ig_auth.access_tokens WHERE user_id = :user_id;`
+
+
+== Table: auth_codes ==
+Description: used to store users' auth codes
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| device_token | varchar
+| auth_code | varchar
+| access_token | varchar
+| refresh_token | varchar
+`Partition Keys: user_id, device_token`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a user's auth codes upon signup/login, where the entry is valid for ttl-time only where the client should make the get access and refresh tokens call
+`INSERT INTO ig_auth.auth_codes (user_id, device_token, auth_code, access_token, refresh_token) VALUES (:user_id, :device_token, :auth_code, :access_token, :refresh_token) USING TTL :ttl;`
+**Query: select**
+selects user's auth codes
+`SELECT auth_code, access_token, refresh_token FROM ig_auth.auth_codes WHERE user_id = :user_id AND device_token = :device_token;`
+**Query: delete**
+deletes user's auth codes
+`DELETE FROM ig_auth.auth_codes WHERE user_id = :user_id AND device_token = :device_token;`
+**Query: delete_all**
+deletes all user's auth codes
+`DELETE FROM ig_auth.auth_codes WHERE user_id = :user_id;`
+
+
+== Table: device_tokens ==
+Description: used to keep track of users' device tokens
+===== Columns =====
+| **Name** | **Type**
+| device_token | varchar
+| user_ids | set<uuid>
+`Partition Keys: device_token`
+`Caching: KEYS_ONLY`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new device token and user id
+`INSERT INTO ig_auth.device_tokens (device_token, user_ids) VALUES (:device_token, :user_id);`
+**Query: add_user_id**
+adds a user_id to a device token
+`UPDATE ig_auth.device_tokens SET user_ids = user_ids + :user_id WHERE device_token = :device_token;`
+**Query: remove_user_id**
+removes a user_id from a device token
+`UPDATE ig_auth.device_tokens SET user_ids = user_ids - :user_id WHERE device_token = :device_token;`
+**Query: select**
+selects the set of user ids associated with a device token
+`SELECT user_ids FROM ig_auth.device_tokens WHERE device_token = :device_token;`
+
+
+== Table: email_creds ==
+Description: used to map a user's email to her/his password and user id
+===== Columns =====
+| **Name** | **Type**
+| email | varchar
+| password | varchar
+| user_id | uuid
+`Partition Keys: email`
+`Caching: NONE`
+
+===== Queries: =====
+
+**Query: insert**
+inserts new user's email creds upon signup
+`INSERT INTO ig_auth.email_creds (email, password, user_id) VALUES (:email, :password, :user_id);`
+**Query: delete**
+deletes a user's password and user_id based on her/his email
+`DELETE FROM ig_auth.email_creds WHERE email = :email;`
+**Query: select**
+selects a user's password and user_id based on her/his email
+`SELECT password, user_id FROM ig_auth.email_creds WHERE email = :email;`
+
+
+== Table: facebook_ids ==
+Description: used to map a user's facebook id to her/his user id
+===== Columns =====
+| **Name** | **Type**
+| facebook_id | varchar
+| user_id | uuid
+`Partition Keys: facebook_id`
+`Caching: NONE`
+
+===== Queries: =====
+
+**Query: insert**
+inserts new user's facebook id and user id upon signup
+`INSERT INTO ig_auth.facebook_ids (facebook_id, user_id) VALUES (:facebook_id, :user_id);`
+**Query: delete**
+deletes a user's facebook_id
+`DELETE FROM ig_auth.facebook_ids WHERE facebook_id = :facebook_id;`
+**Query: select**
+selects a user's user_id based on her/his facebook_id
+`SELECT user_id FROM ig_auth.facebook_ids WHERE facebook_id = :facebook_id;`
+
+
+== Table: refresh_tokens ==
+Description: stores users' refresh tokens
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| device_token | varchar
+| refresh_token | varchar
+`Partition Keys: user_id, device_token`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a user's refresh token
+`INSERT INTO ig_auth.refresh_tokens (user_id, device_token, refresh_token) VALUES (:user_id, :device_token, :refresh_token);`
+**Query: update**
+updates a user's refresh token
+`UPDATE ig_auth.refresh_tokens SET refresh_token = :refresh_token WHERE user_id = :user_id AND device_token = :device_token;`
+**Query: select**
+selects a user's refresh token
+`SELECT refresh_token FROM ig_auth.refresh_tokens WHERE user_id = :user_id AND device_token = :device_token;`
+**Query: delete**
+deletes a user's refresh token upon logout
+`DELETE FROM ig_auth.refresh_tokens WHERE user_id = :user_id AND device_token = :device_token;`
+**Query: delete_all**
+deletes all user's refresh tokens upon logging out from all devices
+`DELETE FROM ig_auth.refresh_tokens WHERE user_id = :user_id;`
+
+
+== Table: users_cred_ids ==
+Description: acts as a reverse index users' authentication cred-ids (email and facebook_id)
+===== Columns =====
+| **Name** | **Type**
+| user_id | uuid
+| facebook_id | varchar
+| email | varchar
+`Partition Keys: user_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a blank row for a new user
+`INSERT INTO ig_auth.users_cred_ids (user_id) VALUES (:user_id);`
+**Query: set_facebook_id**
+sets a user's facebook_id
+`UPDATE ig_auth.users_cred_ids SET facebook_id = :facebook_id WHERE user_id = :user_id;`
+**Query: set_email**
+sets a user's email
+`UPDATE ig_auth.users_cred_ids SET email = :email WHERE user_id = :user_id;`
+**Query: delete**
+deletes a user's cred ids
+`DELETE FROM ig_auth.users_cred_ids WHERE user_id = :user_id;`
+**Query: select_facebook_id**
+selects a user's facebook_id
+`SELECT facebook_id FROM ig_auth.users_cred_ids WHERE user_id = :user_id;`
+**Query: select_email**
+selects a user's email
+`SELECT email FROM ig_auth.users_cred_ids WHERE user_id = :user_id;`
+**Query: select_all**
+selects a user's facebook_id and email
+`SELECT facebook_id, email FROM ig_auth.users_cred_ids WHERE user_id = :user_id;`
+
+

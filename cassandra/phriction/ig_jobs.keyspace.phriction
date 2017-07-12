@@ -1,0 +1,65 @@
+= **Keyspace: ig_jobs** =
+Description: used for all jobs-related tables -- a job is an operation that's either executed on a later time or issued by one process and executed by another where a jobs table keeps track of unsuccessful jobs which need to be reexecuted
+===== Replications =====
+| **Name** | **Replication** | **Description**
+| dev | 'class': 'SimpleStrategy', 'replication_factor' : 1 | used for dev environment
+
+== Table: current_jobs ==
+Description: stores jobs to be issued by one service and executed asynchronously by another service -- this table is useful to trace jobs that didn't get succefully executed and retry executing them at a later point in time
+===== Columns =====
+| **Name** | **Type**
+| job_id | uuid
+| job_time | bigint
+| job | blob
+`Partition Keys: job_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new job
+`INSERT INTO ig_jobs.current_jobs (job_id, job_time, job) VALUES (:job_id, :job_time, :job);`
+**Query: delete**
+deletes a job
+`DELETE FROM ig_jobs.current_jobs WHERE job_id = :job_id;`
+**Query: select**
+selects a job
+`SELECT job_time, job FROM ig_jobs.current_jobs WHERE job_id = :job_id;`
+
+
+== Table: hourly_current_jobs ==
+Description: indexes jobs per-hour and sorts them by the oldest
+===== Columns =====
+| **Name** | **Type**
+| year_month_day_hour | varchar
+| job_time | bigint
+| job_id | uuid
+`Partition Keys: year_month_day_hour, job_time, job_id`
+`Caching: ALL`
+`Order By: job_time : ASC`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new job
+`INSERT INTO ig_jobs.hourly_current_jobs (year_month_day_hour, job_time, job_id) VALUES (:year_month_day_hour, :job_time, :job_id);`
+**Query: delete**
+deletes a job
+`DELETE FROM ig_jobs.hourly_current_jobs WHERE year_month_day_hour = :year_month_day_hour AND job_time = :job_time AND job_id = :job_id;`
+**Query: select_earliest_limit**
+selects earliest jobs during an hour with a limit
+`SELECT job_time, job_id FROM ig_jobs.hourly_current_jobs WHERE year_month_day_hour = :year_month_day_hour LIMIT 30;`
+**Query: select_equal**
+selects jobs at a specific time
+`SELECT job_time, job_id FROM ig_jobs.hourly_current_jobs WHERE year_month_day_hour = :year_month_day_hour AND job_time = :job_time;`
+**Query: select_at_or_after_limit**
+selects jobs at or after a time with a limit
+`SELECT job_time, job_id FROM ig_jobs.hourly_current_jobs WHERE year_month_day_hour = :year_month_day_hour AND job_time >= :job_time LIMIT 30;`
+**Query: select_after_limit**
+selects jobs after a time with a limit
+`SELECT job_time, job_id FROM ig_jobs.hourly_current_jobs WHERE year_month_day_hour = :year_month_day_hour AND job_time > :job_time LIMIT 30;`
+**Query: select**
+selects all jobs jobs within an hour, consider using paging when using this query
+`SELECT job_time, job_id FROM ig_jobs.hourly_current_jobs WHERE year_month_day_hour = :year_month_day_hour;`
+
+

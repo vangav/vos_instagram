@@ -1,0 +1,72 @@
+= **Keyspace: ig_blobs** =
+Description: used for all blob-related tables
+===== Replications =====
+| **Name** | **Replication** | **Description**
+| dev | 'class': 'SimpleStrategy', 'replication_factor' : 1 | used for dev environment
+
+== Table: profile_pictures_blobs ==
+Description: stores users' profile pictures thumbnails
+===== Columns =====
+| **Name** | **Type**
+| picture_id | uuid
+| picture | blob
+`Partition Keys: picture_id`
+`Caching: KEYS_ONLY`
+
+===== Queries: =====
+
+**Query: insert**
+inserts/updates a user's profile picture
+`INSERT INTO ig_blobs.profile_pictures_blobs (picture_id, picture) VALUES (:picture_id, :picture);`
+**Query: delete**
+deletes a user's profile picture
+`DELETE FROM ig_blobs.profile_pictures_blobs WHERE picture_id = :picture_id;`
+**Query: select**
+selects a user's profile picture
+`SELECT picture FROM ig_blobs.profile_pictures_blobs WHERE picture_id = :picture_id;`
+
+
+== Table: photos_blobs ==
+Description: stores posted photos
+===== Columns =====
+| **Name** | **Type**
+| photo_id | uuid
+| photo | blob
+`Partition Keys: photo_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new photo
+`INSERT INTO ig_blobs.photos_blobs (photo_id, photo) VALUES (:photo_id, :photo);`
+**Query: delete**
+deletes a photo
+`DELETE FROM ig_blobs.photos_blobs WHERE photo_id = :photo_id;`
+**Query: select**
+selects a photo
+`SELECT photo FROM ig_blobs.photos_blobs WHERE photo_id = :photo_id;`
+
+
+== Table: photos_thumnbnails_blobs ==
+Description: stores posted photos' thumbnails
+===== Columns =====
+| **Name** | **Type**
+| photo_id | uuid
+| photo_thumbnail | blob
+`Partition Keys: photo_id`
+`Caching: ALL`
+
+===== Queries: =====
+
+**Query: insert**
+inserts a new photo's thumbnail
+`INSERT INTO ig_blobs.photos_thumnbnails_blobs (photo_id, photo_thumbnail) VALUES (:photo_id, :photo_thumnbnail);`
+**Query: delete**
+deletes a photo's thumbnail
+`DELETE FROM ig_blobs.photos_thumnbnails_blobs WHERE photo_id = :photo_id;`
+**Query: select**
+selects a photo's thumbnail
+`SELECT photo_thumbnail FROM ig_blobs.photos_thumnbnails_blobs WHERE photo_id = :photo_id;`
+
+

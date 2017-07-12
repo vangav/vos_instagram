@@ -1,0 +1,127 @@
+
+# "First, solve the problem. Then, write the code. -John Johnson"
+# "Or use Vangav M"
+# www.vangav.com
+
+# MIT License
+#
+# Copyright (c) 2016 Vangav
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to
+# deal in the Software without restriction, including without limitation the
+# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+# sell copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+# IN THE SOFTWARE.
+
+# Community
+# Facebook Group: Vangav Open Source - Backend
+#   fb.com/groups/575834775932682/
+# Facebook Page: Vangav
+#   fb.com/vangav.f
+# 
+# Third party communities for Vangav Backend
+#   - play framework
+#   - cassandra
+#   - datastax
+#   
+# Tag your question online (e.g.: stack overflow, etc ...) with
+#   #vangav_backend
+#   to easier find questions/answers online
+ 
+# @author mustapha
+# fb.com/mustapha.abdallah
+
+# Constants properties
+
+# auth_code_life_time_value
+# e.g.: 2, 4.5, ... (any double value)
+# default: 10
+auth_code_life_time_value=10
+
+# auth_code_life_time_unit
+# must be one of:
+#   NANOSECOND
+#   MICROSECON,
+#   MILLISECOND
+#   SECOND
+#   MINUTE
+#   HOUR
+#   DAY
+#   WEEK
+#   MONTH
+#   YEAR
+#   DECADE
+#   CENTURY
+# default: WEEK
+auth_code_life_time_unit=MINUTE
+
+# access_token_life_time_value
+# e.g.: 2, 4.5, ... (any double value)
+# default: 1
+access_token_life_time_value=1
+
+# access_token_life_time_unit
+# must be one of:
+#   NANOSECOND
+#   MICROSECON,
+#   MILLISECOND
+#   SECOND
+#   MINUTE
+#   HOUR
+#   DAY
+#   WEEK
+#   MONTH
+#   YEAR
+#   DECADE
+#   CENTURY
+# default: WEEK
+access_token_life_time_unit=WEEK
+
+# facebook_app_id
+# get your's from Facebook Graph API
+#   https://developers.facebook.com/docs/graph-api
+# default: invalid_facebook_app_id
+facebook_app_id=invalid_facebook_app_id
+
+# default_region
+# usually this value shouldn't be altered once this service starts running in
+#   production
+# default: Lala_Land
+default_region=Lala_Land
+
+# world_region
+# this region represents the whole world
+# usually this value shouldn't be altered once this service starts running in
+#   production
+# world_region: Planet_Earth
+world_region=Planet_Earth
+
+# geo_grid_dimension_metres
+# usually this value shouldn't be altered once this service starts running in
+#   production
+# default: 10000
+geo_grid_dimension_metres=10000
+
+# default_grid_id
+# usually this value shouldn't be altered once this service starts running in
+#   production
+# default: -1
+default_grid_id=-1
+
+# thumbnail_dimension - defines the dimension in pixels for photo's thumbnails
+# it's recommended not to alter this value once this service starts running in
+#   production
+# default: 300
+thumbnail_dimension=300
