@@ -53,7 +53,15 @@
 
 + simulates incremental usage behavior from many cities around the world with some celebrity users
 
+## overview
 
++ this service is based on vangav backend's [instagram template](https://github.com/vangav/vos_backend/tree/master/vangav_backend_templates/instagram)
++ this service has the 90+% of the vangav backend's generated code + the 10-% of the logic code needed to complete the service
+
+## try this service
+
+1. *for first timers* - follow the steps in the [system requirements tutorial](https://github.com/vangav/vos_backend#system-requirements)
+2. *for first timers* - follow the steps in the [workspace initialization tutorial](https://github.com/vangav/vos_backend#init)
 
 
 
