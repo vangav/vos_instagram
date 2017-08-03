@@ -62,6 +62,12 @@
 
 1. *for first timers* - follow the steps in the [system requirements tutorial](https://github.com/vangav/vos_backend#system-requirements)
 2. *for first timers* - follow the steps in the [workspace initialization tutorial](https://github.com/vangav/vos_backend#init)
+3. download [instagram](https://github.com/vangav/vos_instagram), [instagram dispense](https://github.com/vangav/vos_instagram_dispense), [instagram jobs](https://github.com/vangav/vos_instagram_jobs), [instagram worker](https://github.com/vangav/vos_instagram_worker) and [instagram dash board](https://github.com/vangav/vos_instagram_dash_board) projects (from the green `clone or download` button) inside the workspace directory created previously (`my_services`) and unzip them
+4. **rename** unzipped directories, remove the `-master` from their names
+5. in the terminal `cd` to `vos_instagram/cassandra/cql/`
+6. execute `./_start_cassandra.sh` to start cassandra
+7. `cd` to `vos_instagram/cassandra/cql/drop_and_create/`
+8. execute the commands `./_execute_cql.sh ig_....cql` to initialize the services' database tables; repeat this step for all the [`.cql` files](https://github.com/vangav/vos_instagram/tree/master/cassandra/cql/drop_and_create)
 
 
 
