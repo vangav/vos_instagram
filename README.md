@@ -305,6 +305,125 @@
 | [bots](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/bots) | added the bots' periodic jobs and the bots creator |
 | [controllers](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/controllers) | added the implementation of request processing logic under `controller_name/HandlerControllerName.java` classes and nested response json structures under `controller_name/response_json` packages |
 
+## error codes
+
++ following are the error codes of instagram services
+
+### [instagram](https://github.com/vangav/vos_instagram)
+
+| class | code : sub_code | explanation |
+| ----- | --------------- | ----------- |
+| [Constants](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/common/Constants.java) |  |  |
+|  | 300 : 1 | couldn't initialize kAuthCodeLifeTime |
+|  | 300 : 2 | couldn't initialize kAccessTokenLifeTime |
+|  | 300 : 3 | couldn't initialize kFacebookAppId |
+|  | 300 : 4 | couldn't initialize kDefaultRegion |
+|  | 300 : 5 | couldn't initialize kWorldRegion |
+|  | 300 : 6 | couldn't initialize kDefaultGridId |
+|  | 300 : 7 | couldn't initialize kGeoGridDimensionMetres |
+|  | 300 : 8 | couldn't initialize kGeoGridsConfig |
+|  | 300 : 9 | couldn't initialize kThumbnailDimension |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+
+### [instagram dispense](https://github.com/vangav/vos_instagram_dispense)
+
+| class | code : sub_code | explanation |
+| ----- | --------------- | ----------- |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+
+### [instagram jobs](https://github.com/vangav/vos_instagram_jobs)
+
+| class | code : sub_code | explanation |
+| ----- | --------------- | ----------- |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+
+### [instagram dash board](https://github.com/vangav/vos_instagram_dash_board)
+
+| class | code : sub_code | explanation |
+| ----- | --------------- | ----------- |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+
+### [instagram test](https://github.com/vangav/vos_instagram_test)
+
+| class | code : sub_code | explanation |
+| ----- | --------------- | ----------- |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+
+### [instagram bots](https://github.com/vangav/vos_instagram_bots)
+
+| class | code : sub_code | explanation |
+| ----- | --------------- | ----------- |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+
 
 
 
