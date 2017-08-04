@@ -130,29 +130,17 @@
 
 ### [instagram test](https://github.com/vangav/vos_instagram_test)
 
-| controller(s) | feature |
+| controller | feature |
 | ------------- | ------- |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
+| [test all controllers](https://github.com/vangav/vos_instagram_test/tree/master/app/com/vangav/vos_instagram_test/controllers/test_all_controllers) | runs a full-coverage test for the instagram services above and returns a full report (success, failure, request-to-response time, ...) |
 
 ### [instagram bots](https://github.com/vangav/vos_instagram_bots)
 
-| controller(s) | feature |
+| controller | feature |
 | ------------- | ------- |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
+| [start bots](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/controllers/start_bots) | starts simulating incremental usage behavior from many cities around the world with some celebrity users |
+
+## service references
 
 
 
