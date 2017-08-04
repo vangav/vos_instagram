@@ -383,30 +383,12 @@
 |  | 425 : 4 | wrong refresh token |
 | [HandlerSignupEmail](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/signup_email/HandlerSignupEmail.java) |  |  |
 |  | 427 : 1 | e-mail already signed up |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
+| [HandlerUnfollow](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/unfollow/HandlerUnfollow.java) |  |  |
+|  | 428 : 1 | can't unfollow a user that doesn't exist |
+|  | 428 : 2 | a user can't unfollow another unless she/he is following that user already |
+| [HandlerUnlikePost](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/unlike_post/HandlerUnlikePost.java) |  |  |
+|  | 429 : 1 | can't unlike a post that doesn't exist |
+|  | 429 : 2 | user didn't like this post before to unlike it |
 
 ### [instagram dispense](https://github.com/vangav/vos_instagram_dispense)
 
