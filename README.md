@@ -224,14 +224,14 @@
 
 | reference | explanation |
 | --------- | ----------- |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
+| [routes](https://github.com/vangav/vos_instagram_test/blob/master/conf/routes) | api routes |
+| [prop](https://github.com/vangav/vos_instagram_test/tree/master/conf/prop) | in addition to vangav backend's properties files, this directory contains the clients properties file [`clients`](https://github.com/vangav/vos_instagram_test/blob/master/conf/prop/clients_properties.prop) |
+| [controllers.json](https://github.com/vangav/vos_instagram_test/blob/master/generator_config/controllers.json) | api request/response's elements |
+| [vos_instagram.client_java](https://github.com/vangav/vos_instagram_test/blob/master/generator_config/vos_instagram.client_java) | instagram client's api request/response's elements |
+| [vos_instagram_dash_board.client_java](https://github.com/vangav/vos_instagram_test/blob/master/generator_config/vos_instagram_dash_board.client_java) | instagram dash board client's api request/response's elements |
+| [common](https://github.com/vangav/vos_instagram_test/tree/master/app/com/vangav/vos_instagram_test/common) | handles common operations like representing instagram users |
+| [clients](https://github.com/vangav/vos_instagram_test/tree/master/app/com/vangav/vos_instagram_test/clients) | contains the generated clients for instagram and instagram dash board services |
+| [controllers](https://github.com/vangav/vos_instagram_test/tree/master/app/com/vangav/vos_instagram_test/controllers) | api implementation |
 
 ### [instagram bots](https://github.com/vangav/vos_instagram_bots)
 
