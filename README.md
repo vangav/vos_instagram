@@ -341,42 +341,48 @@
 | [HandlerGetAccessToken](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/get_access_token/HandlerGetAccessToken.java) |  |  |
 |  | 404 : 1 | auth code doesn't exist |
 |  | 404 : 2 | wrong auth code |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
+| [HandlerGetFollowers](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/get_followers/HandlerGetFollowers.java) |  |  |
+|  | 406 : 1 | can't get followers for non-existing user |
+| [HandlerGetFollowing](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/get_following/HandlerGetFollowing.java) |  |  |
+|  | 407 : 1 | can't get following for non-existing user |
+| [HandlerGetPhoto](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/get_photo/HandlerGetPhoto.java) |  |  |
+|  | 408 : 1 | photo doesn't exist |
+| [HandlerGetPhotoThumbnail](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/get_photo_thumbnail/HandlerGetPhotoThumbnail.java) |  |  |
+|  | 409 : 1 | photo doesn't exist |
+| [HandlerGetPostComments](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/get_post_comments/HandlerGetPostComments.java) |  |  |
+|  | 410 : 1 | post doesn't exist |
+| [HandlerGetPostInfo](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/get_post_info/HandlerGetPostInfo.java) |  |  |
+|  | 411 : 1 | post doesn't exist |
+| [HandlerGetPostLikes](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/get_post_likes/HandlerGetPostLikes.java) |  |  |
+|  | 412 : 1 | post doesn't exist |
+| [HandlerGetPostPhotoId](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/get_post_photo_id/HandlerGetPostPhotoId.java) |  |  |
+|  | 413 : 1 | post doesn't exist |
+| [HandlerGetProfilePicture](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/get_profile_picture/HandlerGetProfilePicture.java) |  |  |
+|  | 414 : 1 | user doesn't exist |
+| [HandlerGetUserInfo](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/get_user_info/HandlerGetUserInfo.java) |  |  |
+|  | 418 : 1 | user doesn't exist |
+| [HandlerGetUserPosts](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/get_user_posts/HandlerGetUserPosts.java) |  |  |
+|  | 419 : 1 | user doesn't exist |
+| [HandlerLikePost](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/like_post/HandlerLikePost.java) |  |  |
+|  | 420 : 1 | post doesn't exist |
+|  | 420 : 2 | already liked |
+|  | 420 : 3 | *non-fatal*: invalid device type |
+| [HandlerLoginEmail](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/login_email/HandlerLoginEmail.java) |  |  |
+|  | 421 : 1 | e-mail isn't signed up |
+|  | 421 : 2 | wrong password |
+|  | 421 : 3 | e-mail isn't signed up - triggers in case authentication is disabled |
+| [HandlerLoginFacebook](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/login_facebook/HandlerLoginFacebook.java) |  |  |
+|  | 422 : 1 | couldn't get user's name from facebook graph api |
+| [HandlerLogout](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/logout/HandlerLogout.java) |  |  |
+|  | 423 : 1 | no refresh token for this user/device_token |
+|  | 423 : 2 | wrong refresh token |
+| [HandlerRefreshAccessToken](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/refresh_access_token/HandlerRefreshAccessToken.java) |  |  |
+|  | 425 : 1 | no access token for user |
+|  | 425 : 2 | wrong access token |
+|  | 425 : 3 | no refresh token |
+|  | 425 : 4 | wrong refresh token |
+| [HandlerSignupEmail](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/signup_email/HandlerSignupEmail.java) |  |  |
+|  | 427 : 1 | e-mail already signed up |
 | []() |  |  |
 |  |  |  |
 |  |  |  |
