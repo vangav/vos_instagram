@@ -403,41 +403,18 @@
 
 | class | code : sub_code | explanation |
 | ----- | --------------- | ----------- |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
+| [Constants](https://github.com/vangav/vos_instagram_test/blob/master/app/com/vangav/vos_instagram_test/clients/Constants.java) |  |  |
+|  | 1000 : 1 | couldn't initialize kVosInstagramUrl |
+|  | 1000 : 2 | couldn't initialize kVosInstagramDashBoardUrl |
 
 ### [instagram bots](https://github.com/vangav/vos_instagram_bots)
 
 | class | code : sub_code | explanation |
 | ----- | --------------- | ----------- |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
+| [Constants](https://github.com/vangav/vos_instagram_bots/blob/master/app/com/vangav/vos_instagram_bots/clients/Constants.java) |  |  |
+|  | 1000 : 1 | couldn't initialize kVosInstagramUrl |
 
+## notes
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
++ [instagram](https://github.com/vangav/vos_instagram), [instagram dispense](https://github.com/vangav/vos_instagram_dispense), [instagram jobs](https://github.com/vangav/vos_instagram_jobs), [instagram worker](https://github.com/vangav/vos_instagram_worker), [instagram dash board](https://github.com/vangav/vos_instagram_dash_board), [instagram test](https://github.com/vangav/vos_instagram_test) and [instagram bots](https://github.com/vangav/vos_instagram_bots) services has no connection with [Instagram Inc.](https://www.instagram.com/); these services are just a [vangav backend](https://github.com/vangav/vos_backend) template to demonstrate using some features/utilities in the context of photo sharing apps
++ the "instagram" name is used for users to easier understand the services' design, features and source code
