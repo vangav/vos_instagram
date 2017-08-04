@@ -390,38 +390,14 @@
 |  | 429 : 1 | can't unlike a post that doesn't exist |
 |  | 429 : 2 | user didn't like this post before to unlike it |
 
-### [instagram dispense](https://github.com/vangav/vos_instagram_dispense)
-
-| class | code : sub_code | explanation |
-| ----- | --------------- | ----------- |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-
-### [instagram jobs](https://github.com/vangav/vos_instagram_jobs)
-
-| class | code : sub_code | explanation |
-| ----- | --------------- | ----------- |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-
 ### [instagram dash board](https://github.com/vangav/vos_instagram_dash_board)
 
 | class | code : sub_code | explanation |
 | ----- | --------------- | ----------- |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
-| []() |  |  |
-|  |  |  |
-|  |  |  |
+| [HandlerGetDailyUsersErrorLogs](https://github.com/vangav/vos_instagram_dash_board/blob/master/app/com/vangav/vos_instagram_dash_board/controllers/get_daily_users_error_logs/HandlerGetDailyUsersErrorLogs.java) |  |  |
+|  | 404 : 1 | e-mail isn't registered |
+| [HandlerGetDailyUsersLogs](https://github.com/vangav/vos_instagram_dash_board/blob/master/app/com/vangav/vos_instagram_dash_board/controllers/get_daily_users_logs/HandlerGetDailyUsersLogs.java) |  |  |
+|  | 405 : 1 | e-mail isn't registered |
 
 ### [instagram test](https://github.com/vangav/vos_instagram_test)
 
