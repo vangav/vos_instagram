@@ -188,14 +188,20 @@
 
 | reference | explanation |
 | --------- | ----------- |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
+| [routes](https://github.com/vangav/vos_instagram_jobs/blob/master/conf/routes) | api routes |
+| [prop](https://github.com/vangav/vos_instagram_jobs/tree/master/conf/prop) | in addition to vangav backend's properties files, this directory contains instagram jobs properties files: [`constants`](https://github.com/vangav/vos_instagram_jobs/blob/master/conf/prop/constants_properties.prop), [`users rank`](https://github.com/vangav/vos_instagram_jobs/blob/master/conf/prop/users_rank_properties.prop) and [`posts rank`](https://github.com/vangav/vos_instagram_jobs/blob/master/conf/prop/posts_rank_properties.prop) |
+| [reverse_geo_coding](https://github.com/vangav/vos_instagram_jobs/tree/master/conf/data/geo/reverse_geo_coding) | reverse geo coding data |
+| [controllers.json](https://github.com/vangav/vos_instagram_jobs/blob/master/generator_config/controllers.json) | api request/response's elements |
+| [ig_app_data.keyspace](https://github.com/vangav/vos_instagram_jobs/blob/master/generator_config/ig_app_data.keyspace) | `ig_app_data` is the keyspace used for all user-info-related tables which are directly relevant to the app's functionality (e.g.: posts, followers, ...) |
+| [ig_jobs.keyspace](https://github.com/vangav/vos_instagram_jobs/blob/master/generator_config/ig_jobs.keyspace) | `ig_jobs` is the keyspace used for all jobs-related tables -- a job is an operation that's either executed at a later time or issued by one service and executed by another where a jobs table keeps track of unsuccessful jobs which need to be reexecuted |
+| [ig_logging.keyspace](https://github.com/vangav/vos_instagram_jobs/blob/master/generator_config/ig_logging.keyspace) | `ig_logging` is the keyspace used for all logging-related tables |
+| [Global.java](https://github.com/vangav/vos_instagram_jobs/blob/master/app/Global.java) | initializes reverse geo coding data and periodic jobs |
+| [common](https://github.com/vangav/vos_instagram_jobs/tree/master/app/com/vangav/vos_instagram_jobs/common) | handles common operations like instagram-jobs-service's properties |
+| [periodic_jobs](https://github.com/vangav/vos_instagram_jobs/tree/master/app/com/vangav/vos_instagram_jobs/periodic_jobs) | handles retrying failed jobs as well as ranking users and posts |
+| [controllers](https://github.com/vangav/vos_instagram_jobs/tree/master/app/com/vangav/vos_instagram_jobs/controllers) | api implementation |
+| [ig_app_data](https://github.com/vangav/vos_instagram_jobs/tree/master/app/com/vangav/vos_instagram_jobs/cassandra_keyspaces/ig_app_data) | `ig_app_data` cassandra's keyspace client |
+| [ig_jobs](https://github.com/vangav/vos_instagram_jobs/tree/master/app/com/vangav/vos_instagram_jobs/cassandra_keyspaces/ig_jobs) | `ig_jobs` cassandra's keyspace client |
+| [ig_logging](https://github.com/vangav/vos_instagram_jobs/tree/master/app/com/vangav/vos_instagram_jobs/cassandra_keyspaces/ig_logging) | `ig_logging` cassandra's keyspace client |
 
 ### [instagram dash board](https://github.com/vangav/vos_instagram_dash_board)
 
