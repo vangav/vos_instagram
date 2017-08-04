@@ -124,14 +124,9 @@
 
 | controller(s) | feature |
 | ------------- | ------- |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
+| [get daily users error logs](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/controllers/get_daily_users_error_logs), [get daily users logs](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/controllers/get_daily_users_logs) and [get hourly controllers error logs](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/controllers/get_hourly_controllers_error_logs) | handle getting logs per user/controller |
+| [get annual regional counters](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/controllers/get_annual_regional_counters), [get daily regional counters](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/controllers/get_daily_regional_counters), [get daily requests counters](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/controllers/get_daily_requests_counters) and [get hourly requests counters](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/controllers/get_hourly_requests_counters) | handle getting backend-wide analytics |
+| [get top users](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/controllers/get_top_users) and [get top posts](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/controllers/get_top_posts) | gets in-depth information about top users/posts on specified dates/locations |
 
 ### [instagram test](https://github.com/vangav/vos_instagram_test)
 
