@@ -249,9 +249,6 @@
 | [clients](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/clients) | contains the generated clients for instagram service |
 | [controllers](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/controllers) | api implementation |
 | [ig_bots](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/cassandra_keyspaces/ig_bots) | `ig_bots` cassandra's keyspace client |
-| []() |  |
-| []() |  |
-| []() |  |
 
 
 
