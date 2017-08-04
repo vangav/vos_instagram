@@ -250,6 +250,45 @@
 | [controllers](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/controllers) | api implementation |
 | [ig_bots](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/cassandra_keyspaces/ig_bots) | `ig_bots` cassandra's keyspace client |
 
+## change log
+
++ this section lists the 10-% code added after vangav backend generated 90+% of the code
+
+### [instagram](https://github.com/vangav/vos_instagram)
+
+| file/dir | change |
+| -------- | ------ |
+| [prop](https://github.com/vangav/vos_instagram/tree/master/conf/prop) | added instagram properties files: [`constants`](https://github.com/vangav/vos_instagram/blob/master/conf/prop/constants_properties.prop) and [`dispense`](https://github.com/vangav/vos_instagram/blob/master/conf/prop/dispense_properties.prop) |
+| [reverse_geo_coding](https://github.com/vangav/vos_instagram/tree/master/conf/data/geo/reverse_geo_coding) | added reverse geo coding data |
+| [Global.java](https://github.com/vangav/vos_instagram/blob/master/app/Global.java) | added the initialization of reverse geo coding data |
+| [common](https://github.com/vangav/vos_instagram/tree/master/app/com/vangav/vos_instagram/common) | added common operations like authentication, cassandra's frequent-operations, omitting blobs from requests/responses for logging, ... |
+| [controllers](https://github.com/vangav/vos_instagram/tree/master/app/com/vangav/vos_instagram/controllers) | added the implementation of request processing logic under `controller_name/HandlerControllerName.java` classes and nested response json structures under `controller_name/response_json` packages |
+
+### [instagram dispense](https://github.com/vangav/vos_instagram_dispense)
+
+| file/dir | change |
+| -------- | ------ |
+
+### [instagram jobs](https://github.com/vangav/vos_instagram_jobs)
+
+| file/dir | change |
+| -------- | ------ |
+
+### [instagram dash board](https://github.com/vangav/vos_instagram_dash_board)
+
+| file/dir | change |
+| -------- | ------ |
+
+### [instagram test](https://github.com/vangav/vos_instagram_test)
+
+| file/dir | change |
+| -------- | ------ |
+
+### [instagram bots](https://github.com/vangav/vos_instagram_bots)
+
+| file/dir | change |
+| -------- | ------ |
+
 
 
 
