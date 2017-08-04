@@ -170,14 +170,19 @@
 
 | reference | explanation |
 | --------- | ----------- |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
+| [routes](https://github.com/vangav/vos_instagram_dispense/blob/master/conf/routes) | api routes |
+| [controllers.json](https://github.com/vangav/vos_instagram_dispense/blob/master/generator_config/controllers.json) | api request/response's elements |
+| [ig_auth.keyspace](https://github.com/vangav/vos_instagram_dispense/blob/master/generator_config/ig_auth.keyspace) | `ig_auth` is the keyspace used for all authentication-related tables |
+| [ig_app_data.keyspace](https://github.com/vangav/vos_instagram_dispense/blob/master/generator_config/ig_app_data.keyspace) | `ig_app_data` is the keyspace used for all user-info-related tables which are directly relevant to the app's functionality (e.g.: posts, followers, ...) |
+| [ig_jobs.keyspace](https://github.com/vangav/vos_instagram_dispense/blob/master/generator_config/ig_jobs.keyspace) | `ig_jobs` is the keyspace used for all jobs-related tables -- a job is an operation that's either executed at a later time or issued by one service and executed by another where a jobs table keeps track of unsuccessful jobs which need to be reexecuted |
+| [ig_logging.keyspace](https://github.com/vangav/vos_instagram_dispense/blob/master/generator_config/ig_logging.keyspace) | `ig_logging` is the keyspace used for all logging-related tables |
+| [ig_analytics.keyspace](https://github.com/vangav/vos_instagram_dispense/blob/master/generator_config/ig_analytics.keyspace) | `ig_analytics` is the keyspace used for all analytics-related tables |
+| [controllers](https://github.com/vangav/vos_instagram_dispense/tree/master/app/com/vangav/vos_instagram_dispense/controllers) | api implementation |
+| [ig_auth](https://github.com/vangav/vos_instagram_dispense/tree/master/app/com/vangav/vos_instagram_dispense/cassandra_keyspaces/ig_auth) | `ig_auth` cassandra's keyspace client |
+| [ig_app_data](https://github.com/vangav/vos_instagram_dispense/tree/master/app/com/vangav/vos_instagram_dispense/cassandra_keyspaces/ig_app_data) | `ig_app_data` cassandra's keyspace client |
+| [ig_jobs](https://github.com/vangav/vos_instagram_dispense/tree/master/app/com/vangav/vos_instagram_dispense/cassandra_keyspaces/ig_jobs) | `ig_jobs` cassandra's keyspace client |
+| [ig_logging](https://github.com/vangav/vos_instagram_dispense/tree/master/app/com/vangav/vos_instagram_dispense/cassandra_keyspaces/ig_logging) | `ig_logging` cassandra's keyspace client |
+| [ig_analytics](https://github.com/vangav/vos_instagram_dispense/tree/master/app/com/vangav/vos_instagram_dispense/cassandra_keyspaces/ig_analytics) | `ig_analytics` cassandra's keyspace client |
 
 ### [instagram jobs](https://github.com/vangav/vos_instagram_jobs)
 
