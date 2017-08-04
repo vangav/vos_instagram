@@ -323,6 +323,39 @@
 |  | 300 : 7 | couldn't initialize kGeoGridDimensionMetres |
 |  | 300 : 8 | couldn't initialize kGeoGridsConfig |
 |  | 300 : 9 | couldn't initialize kThumbnailDimension |
+| [CommonPlayHandler](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/CommonPlayHandler.java) |  |  |
+|  | 400 : 1 | no access token for user id and device token |
+|  | 400 : 2 | wrong access token |
+|  | 400 : 3 | already expired access token |
+|  | 400 : 4 | just expired access token |
+| [HandlerComment](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/comment/HandlerComment.java) |  |  |
+|  | 401 : 1 | can't comment on a post that doesn't exist |
+|  | 401 : 2 | *non-fatal*: invalid device type |
+| [DeleteComment](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/delete_comment/HandlerDeleteComment.java) |  |  |
+|  | 402 : 1 | post/comment doesn't exist |
+| [HandlerFollow](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/follow/HandlerFollow.java) |  |  |
+|  | 403 : 1 | can't follow self |
+|  | 403 : 2 | can't follow an non-existing user |
+|  | 403 : 3 | already following user |
+|  | 403 : 4 | *non-fatal*: invalid device type |
+| [HandlerGetAccessToken](https://github.com/vangav/vos_instagram/blob/master/app/com/vangav/vos_instagram/controllers/get_access_token/HandlerGetAccessToken.java) |  |  |
+|  | 404 : 1 | auth code doesn't exist |
+|  | 404 : 2 | wrong auth code |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
+| []() |  |  |
+|  |  |  |
+|  |  |  |
 | []() |  |  |
 |  |  |  |
 |  |  |  |
