@@ -237,11 +237,18 @@
 
 | reference | explanation |
 | --------- | ----------- |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
+| [routes](https://github.com/vangav/vos_instagram_bots/blob/master/conf/routes) | api routes |
+| [setup_data](https://github.com/vangav/vos_instagram_bots/tree/master/conf/setup_data) | contains a one-time setup data with all the cities (id, location, population, ...) where the bots are created |
+| [prop](https://github.com/vangav/vos_instagram_bots/tree/master/conf/prop) | in addition to vangav backend's properties files, this directory contains the clients properties file [`clients`](https://github.com/vangav/vos_instagram_bots/blob/master/conf/prop/clients_properties.prop) |
+| [controllers.json](https://github.com/vangav/vos_instagram_bots/blob/master/generator_config/controllers.json) | api request/response's elements |
+| [vos_instagram.client_java](https://github.com/vangav/vos_instagram_bots/blob/master/generator_config/vos_instagram.client_java) | instagram client's api request/response's elements |
+| [ig_bots.keyspace](https://github.com/vangav/vos_instagram_bots/blob/master/generator_config/ig_bots.keyspace) | `ig_bots` is the keyspace used for all bots-related vos_instagream tables |
+| [Global.java](https://github.com/vangav/vos_instagram_bots/blob/master/app/Global.java) | initializes cities and bots |
+| [cities](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/cities) | has the cities' json representation and loader |
+| [bots](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/bots) | has the bots' periodic jobs and the bots creator |
+| [clients](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/clients) | contains the generated clients for instagram service |
+| [controllers](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/controllers) | api implementation |
+| [ig_bots](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/cassandra_keyspaces/ig_bots) | `ig_bots` cassandra's keyspace client |
 | []() |  |
 | []() |  |
 | []() |  |
