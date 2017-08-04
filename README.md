@@ -207,14 +207,18 @@
 
 | reference | explanation |
 | --------- | ----------- |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
+| [routes](https://github.com/vangav/vos_instagram_dash_board/blob/master/conf/routes) | api routes |
+| [controllers.json](https://github.com/vangav/vos_instagram_dash_board/blob/master/generator_config/controllers.json) | api request/response's elements |
+| [ig_auth.keyspace](https://github.com/vangav/vos_instagram_dash_board/blob/master/generator_config/ig_auth.keyspace) | `ig_auth` is the keyspace used for all authentication-related tables |
+| [ig_app_data.keyspace](https://github.com/vangav/vos_instagram_dash_board/blob/master/generator_config/ig_app_data.keyspace) | `ig_app_data` is the keyspace used for all user-info-related tables which are directly relevant to the app's functionality (e.g.: posts, followers, ...) |
+| [ig_logging.keyspace](https://github.com/vangav/vos_instagram_dash_board/blob/master/generator_config/ig_logging.keyspace) | `ig_logging` is the keyspace used for all logging-related tables |
+| [ig_analytics.keyspace](https://github.com/vangav/vos_instagram_dash_board/blob/master/generator_config/ig_analytics.keyspace) | `ig_analytics` is the keyspace used for all analytics-related tables |
+| [common](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/common) | handles common operations like service-wide constants |
+| [controllers](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/controllers) | api implementation |
+| [ig_auth](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/cassandra_keyspaces/ig_auth) | `ig_auth` cassandra's keyspace client |
+| [ig_app_data](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/cassandra_keyspaces/ig_app_data) | `ig_app_data` cassandra's keyspace client |
+| [ig_logging](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/cassandra_keyspaces/ig_logging) | `ig_logging` cassandra's keyspace client |
+| [ig_analytics](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/cassandra_keyspaces/ig_analytics) | `ig_analytics` cassandra's keyspace client |
 
 ### [instagram test](https://github.com/vangav/vos_instagram_test)
 
