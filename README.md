@@ -268,26 +268,42 @@
 
 | file/dir | change |
 | -------- | ------ |
+| [controllers](https://github.com/vangav/vos_instagram_dispense/tree/master/app/com/vangav/vos_instagram_dispense/controllers) | added the implementation of request processing logic under `controller_name/HandlerControllerName.java` classes and nested response json structures under `controller_name/response_json` packages |
 
 ### [instagram jobs](https://github.com/vangav/vos_instagram_jobs)
 
 | file/dir | change |
 | -------- | ------ |
+| [prop](https://github.com/vangav/vos_instagram_jobs/tree/master/conf/prop) | added instagram jobs properties files: [`constants`](https://github.com/vangav/vos_instagram_jobs/blob/master/conf/prop/constants_properties.prop), [`users rank`](https://github.com/vangav/vos_instagram_jobs/blob/master/conf/prop/users_rank_properties.prop) and [`posts rank`](https://github.com/vangav/vos_instagram_jobs/blob/master/conf/prop/posts_rank_properties.prop) |
+| [reverse_geo_coding](https://github.com/vangav/vos_instagram_jobs/tree/master/conf/data/geo/reverse_geo_coding) | added reverse geo coding data |
+| [Global.java](https://github.com/vangav/vos_instagram_jobs/blob/master/app/Global.java) | added the initialization of reverse geo coding data and periodic jobs |
+| [common](https://github.com/vangav/vos_instagram_jobs/tree/master/app/com/vangav/vos_instagram_jobs/common) | added common operations like instagram-jobs-service's properties |
+| [periodic_jobs](https://github.com/vangav/vos_instagram_jobs/tree/master/app/com/vangav/vos_instagram_jobs/periodic_jobs) | added the periodic jobs for retrying failed jobs as well as ranking users and posts |
+| [controllers](https://github.com/vangav/vos_instagram_jobs/tree/master/app/com/vangav/vos_instagram_jobs/controllers) | added the implementation of request processing logic under `controller_name/HandlerControllerName.java` classes and nested response json structures under `controller_name/response_json` packages |
 
 ### [instagram dash board](https://github.com/vangav/vos_instagram_dash_board)
 
 | file/dir | change |
 | -------- | ------ |
+| [common](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/common) | added common operations like service-wide constants |
+| [controllers](https://github.com/vangav/vos_instagram_dash_board/tree/master/app/com/vangav/vos_instagram_dash_board/controllers) | added the implementation of request processing logic under `controller_name/HandlerControllerName.java` classes and nested response json structures under `controller_name/response_json` packages |
 
 ### [instagram test](https://github.com/vangav/vos_instagram_test)
 
 | file/dir | change |
 | -------- | ------ |
+| [common](https://github.com/vangav/vos_instagram_test/tree/master/app/com/vangav/vos_instagram_test/common) | added common operations like representing instagram users |
+| [controllers](https://github.com/vangav/vos_instagram_test/tree/master/app/com/vangav/vos_instagram_test/controllers) | added the implementation of request processing logic under `controller_name/HandlerControllerName.java` classes and nested response json structures under `controller_name/response_json` packages |
 
 ### [instagram bots](https://github.com/vangav/vos_instagram_bots)
 
 | file/dir | change |
 | -------- | ------ |
+| [setup_data](https://github.com/vangav/vos_instagram_bots/tree/master/conf/setup_data) | added a one-time setup data with all the cities (id, location, population, ...) where the bots are created |
+| [Global.java](https://github.com/vangav/vos_instagram_bots/blob/master/app/Global.java) | added the initialization of cities and bots |
+| [cities](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/cities) | added the cities' json representation and loader |
+| [bots](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/bots) | added the bots' periodic jobs and the bots creator |
+| [controllers](https://github.com/vangav/vos_instagram_bots/tree/master/app/com/vangav/vos_instagram_bots/controllers) | added the implementation of request processing logic under `controller_name/HandlerControllerName.java` classes and nested response json structures under `controller_name/response_json` packages |
 
 
 
