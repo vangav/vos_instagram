@@ -110,29 +110,15 @@
 
 ### [instagram dispense](https://github.com/vangav/vos_instagram_dispense)
 
-| controller(s) | feature |
+| controller | feature |
 | ------------- | ------- |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
+| [post photo to followers](https://github.com/vangav/vos_instagram_dispense/tree/master/app/com/vangav/vos_instagram_dispense/controllers/post_photo_to_followers) | handles distributing new posts to followers; used by [instagram](https://github.com/vangav/vos_instagram): [post photo](https://github.com/vangav/vos_instagram/tree/master/app/com/vangav/vos_instagram/controllers/post_photo) |
 
 ### [instagram jobs](https://github.com/vangav/vos_instagram_jobs)
 
-| controller(s) | feature |
+| controller | feature |
 | ------------- | ------- |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
-| []() |  |
+| [start jobs](https://github.com/vangav/vos_instagram_jobs/tree/master/app/com/vangav/vos_instagram_jobs/controllers/start_jobs) | stars the periodic job for retrying failed rest jobs and the periodic jobs for ranking users and posts |
 
 ### [instagram dash board](https://github.com/vangav/vos_instagram_dash_board)
 
