@@ -142,6 +142,84 @@
 
 ## service references
 
+### [instagram](https://github.com/vangav/vos_instagram)
+
+| reference | explanation |
+| --------- | ----------- |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+
+### [instagram dispense](https://github.com/vangav/vos_instagram_dispense)
+
+| reference | explanation |
+| --------- | ----------- |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+
+### [instagram jobs](https://github.com/vangav/vos_instagram_jobs)
+
+| reference | explanation |
+| --------- | ----------- |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+
+### [instagram dash board](https://github.com/vangav/vos_instagram_dash_board)
+
+| reference | explanation |
+| --------- | ----------- |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+
+### [instagram test](https://github.com/vangav/vos_instagram_test)
+
+| reference | explanation |
+| --------- | ----------- |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+
+### [instagram bots](https://github.com/vangav/vos_instagram_bots)
+
+| reference | explanation |
+| --------- | ----------- |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+| []() |  |
+
 
 
 
