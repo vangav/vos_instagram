@@ -73,7 +73,8 @@
 11. `cd` to `vos_instagram_jobs` and execute `./_run.sh 4000` to start the instagram jobs service on port 4000
 12. `cd` to `vos_instagram_dash_board` and execute `./_run.sh 5000` to start the instagram dash board service on port 5000
 13. `cd` to `vos_instagram` and execute `./_run.sh` to start the instagram service on port 9000
-14. from your prefered client (*we recommned* [postman](https://www.getpostman.com/docs/postman/launching_postman/installation_and_updates)) start trying the service; refer to the **features** and **service references** sections for reference
+14. make a call to the [`start_jobs`](https://github.com/vangav/vos_instagram_jobs/tree/master/app/com/vangav/vos_instagram_jobs/controllers/start_jobs) controller from the `vos_instagram_jobs` backend service in order to start the periodic jobs
+15. from your prefered client (*we recommned* [postman](https://www.getpostman.com/docs/postman/launching_postman/installation_and_updates)) start trying the service; refer to the **features** and **service references** sections for reference
 + at the end to stop the services: press `control + d` in the terminal session where each service was started in (9, 10, 11, 12 and 13)
 + to stop cassandra: execute `ps auwx | grep cassandra` to get cassandra's `(pid)` then `kill -9 (pid)` to stop cassandra
 
