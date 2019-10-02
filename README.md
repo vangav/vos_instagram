@@ -9,7 +9,7 @@
 
 + [instagram test](https://github.com/vangav/vos_instagram_test) is used to test the services above and [instagram bots](https://github.com/vangav/vos_instagram_bots) is used to simulate normal users' behavior; both services are generated using [vangav backend](https://github.com/vangav/vos_backend)
 
-![instagram backend design](https://scontent-mad1-1.xx.fbcdn.net/v/t31.0-8/20934888_1976185579263752_2421544181147844904_o.png?oh=4c016169ed43e3cecd08b658d2c1dc52&oe=5A2D6BD7)
+![instagram backend design](https://scontent-ams4-1.xx.fbcdn.net/v/t31.0-8/20988194_1976184039263906_6099093544043617330_o.png?_nc_cat=103&_nc_oc=AQm2KvFzuT0txSVe6YFPcXqkqsTlJwVD5p4plUc63HRK5Z_Y-7PE5Sb82yxCUc1i1B0&_nc_ht=scontent-ams4-1.xx&oh=66aa58aad89e48635586ef76b12a04ec&oe=5E2C3133)
 
 ## prerequisite
 
